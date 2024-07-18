@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Real & Return
+{% endblock %}
+
+{% block main %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
+    <h3>Real & Return</h3>
+    <div class="container">
+        <table class="table table-bordered display" width="100%" cellspacing="0" id="real">
+            <thead>
+                <tr>
+                    <th scope="col">Transaction</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Ammount</th>
+                    <th scope="col">Date start</th>
+                    <th scope="col">Date end</th>
+                    <th scope="col">Operation</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Return</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.noConflict();
+            $('#real').DataTable({
+                processing: true,
+                serverSide: true,
+                paginationType: "full_numbers",
+                lengthMenu: [
+                    [10, 25, 50, 100],
+                    [10, 25, 50, 100]
+                ],
+                "ajax": {
+                    url: "/api/real", // json datasource
+                    type: "post", // type of method  ,GET/POST/DELETE
+                    dataSrc: 'data',
+                    error: function(e) {
+                        $("#employee_grid_processing").css("display", "none");
+                    }
+                },
+                columns: [{
+                    data: 'transactionid'
+                },
+                    {
+                        data: 'name'
+                    },
+                    {
+                        data: 'username'
+                    },
+                    {
+                        data: 'ammount'
+                    },
+                    {
+                        data: 'date_start'
+                    },
+                    {
+                        data: 'date_end'
+                    },
+                    {
+                        data: 'operation'
+                    },
+                    {
+                        data: 'price'
+                    },
+                    {
+                        data: 'total'
+                    },
+                    {
+                        data: 'return'
+                    }
+                ]
+            });
+        });
+    </script>
+
+{% endblock %}
